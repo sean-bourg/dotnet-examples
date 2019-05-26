@@ -51,7 +51,7 @@ namespace DotNetExamples.StreamBuffer
         /// <summary>
         /// Dynamic delagate assignment variable. Since the stream can not remove element the add function dynamically changes as the stream fills to reduce program steps once full.
         /// </summary>
-        DynamicAdd addFunc;
+        Action<T> addFunc;
 
         /// <summary>
         /// Construct instance of the LinkedList buffer.
@@ -60,7 +60,7 @@ namespace DotNetExamples.StreamBuffer
         public CircularArrayBuffer(int capacity)
         {
             Capacity = capacity;
-            addFunc = new DynamicAdd(AddEmpty);
+            addFunc = AddEmpty;
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace DotNetExamples.StreamBuffer
             Count = 1;
             Last = new CircularArrayNode<T>(value);
             First = Last;
-            addFunc = new DynamicAdd(AddPartial);
+            addFunc = AddPartial;
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace DotNetExamples.StreamBuffer
 
             if (Count == Capacity)
             {
-                addFunc = new DynamicAdd(AddFull);
+                addFunc = AddFull;
             }
         }
 
