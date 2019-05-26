@@ -43,12 +43,6 @@ namespace DotNetExamples.StreamBuffer
         CircularArrayNode<T> Last;
 
         /// <summary>
-        /// Delagate function for dynamic adding of elements.
-        /// </summary>
-        /// <param name="value"></param>
-        delegate void DynamicAdd(T value);
-
-        /// <summary>
         /// Dynamic delagate assignment variable. Since the stream can not remove element the add function dynamically changes as the stream fills to reduce program steps once full.
         /// </summary>
         Action<T> addFunc;
