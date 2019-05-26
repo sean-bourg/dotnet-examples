@@ -1,9 +1,0 @@
-C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer\bin\Debug\netstandard2.0\DotNetExamples.StreamBuffer.deps.json
-C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer\bin\Debug\netstandard2.0\DotNetExamples.StreamBuffer.dll
-C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer\bin\Debug\netstandard2.0\DotNetExamples.StreamBuffer.pdb
-C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer\obj\Debug\netstandard2.0\DotNetExamples.StreamBuffer.csprojAssemblyReference.cache
-C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer\obj\Debug\netstandard2.0\DotNetExamples.StreamBuffer.csproj.CoreCompileInputs.cache
-C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer\obj\Debug\netstandard2.0\DotNetExamples.StreamBuffer.AssemblyInfoInputs.cache
-C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer\obj\Debug\netstandard2.0\DotNetExamples.StreamBuffer.AssemblyInfo.cs
-C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer\obj\Debug\netstandard2.0\DotNetExamples.StreamBuffer.dll
-C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer\obj\Debug\netstandard2.0\DotNetExamples.StreamBuffer.pdb
