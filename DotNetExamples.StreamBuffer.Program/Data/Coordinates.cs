@@ -17,7 +17,6 @@ namespace DotNetExamples.StreamBuffer.Program.Data
         /// </summary>
         public readonly double Latitude;
 
-
         /// <summary>
         /// Create instance of the Coordinate.
         /// </summary>
@@ -62,13 +61,11 @@ namespace DotNetExamples.StreamBuffer.Program.Data
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => base.GetHashCode();
-
-
+        
         /// <summary>
         /// Convert coordinates to a string.
         /// </summary>
         /// <returns></returns>
         public override string ToString() => String.Format("({0},{1})", Latitude, Longitude);
-
     }
 }
