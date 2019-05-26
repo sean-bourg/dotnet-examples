@@ -1,0 +1,15 @@
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\bin\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.dll.config
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\bin\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.deps.json
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\bin\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.runtimeconfig.json
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\bin\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.runtimeconfig.dev.json
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\bin\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.dll
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\bin\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.dll
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\bin\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.pdb
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\obj\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.csprojAssemblyReference.cache
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\obj\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.csproj.CoreCompileInputs.cache
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\obj\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.AssemblyInfoInputs.cache
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\obj\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.AssemblyInfo.cs
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\obj\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.csproj.CopyComplete
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\bin\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.pdb
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\obj\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.dll
+C:\Users\sean\git\dotnet-examples\DotNetExamples.StreamBuffer.Program\obj\Debug\netcoreapp2.1\DotNetExamples.StreamBuffer.Program.pdb
