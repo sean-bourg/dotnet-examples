@@ -49,26 +49,27 @@ namespace DotNetExamples.StreamBuffer
         /// <returns>value</returns>
         public CircularArrayNode<T> Get(int index)
         {
-            if (0 == index)
+            // have to check for a negative because some people ¯\_(ツ)_/¯
+            if (0 <= index)
             {
                 return this;
             }
-            return (default(CircularArrayNode<T>) == Child) ? default(CircularArrayNode<T>) : Child.Get(index - 1);
+            return default(CircularArrayNode<T>) == Child ? default(CircularArrayNode<T>) : Child.Get(index - 1);
         }
 
         /// <summary>
         /// Returns the relative index of the given element if it is in the CircularArrayNode or -1 if the element is not found.
         /// </summary>
-        /// <param name="obj">The object to find in the array</param>
+        /// <param name="value">The object to find in the array</param>
         /// <returns>The index of the given element</returns>
-        public int IndexOf(T obj, int index)
+        public int IndexOf(T value, int index)
         {
-            bool isMatch = obj.Equals(Value);
+            bool isMatch = value.Equals(Value);
             if (isMatch)
             {
                 return index;
             }
-            return (default(CircularArrayNode<T>) == Child) ? -1 : Child.IndexOf(obj, index - 1);
+            return default(CircularArrayNode<T>) == Child ? -1 : Child.IndexOf(value, index - 1);
         }
     }
 }

@@ -15,27 +15,17 @@ namespace DotNetExamples.StreamBuffer
         /// <summary>
         /// The base linked list.
         /// </summary>
-        private readonly CircularArrayNode<T> List;
+        readonly CircularArrayNode<T> List;
 
         /// <summary>
         /// The current pointer for the linked list.
         /// </summary>
-        private CircularArrayNode<T> _current;
+        CircularArrayNode<T> _current;
 
         /// <summary>
         /// Has started flag for enumerator, used to determine if the enumerator has moved into the first element..
         /// </summary>
-        private bool HasStarted;
-        
-        /// <summary>
-        /// Construct enumerator for linked list.
-        /// </summary>
-        /// <param name="list"></param>
-        public CircularArrayEnumerator(CircularArrayNode<T> list)
-        {
-            List = list;
-            HasStarted = false;
-        }
+        bool HasStarted;
 
         /// <summary>
         /// Gets the element in the collection at the current position of the enumerator.
@@ -47,9 +37,19 @@ namespace DotNetExamples.StreamBuffer
         /// </summary>
         object IEnumerator.Current { get => Current; }
 
-        public void Dispose()
-        {            
+        /// <summary>
+        /// Construct enumerator for linked list.
+        /// </summary>
+        /// <param name="list"></param>
+        public CircularArrayEnumerator(CircularArrayNode<T> list)
+        {
+            List = list;
+            HasStarted = false;
         }
+
+
+        public void Dispose()
+        { }
 
         /// <summary>
         /// Advances the enumerator to the next element of the collection.
@@ -66,7 +66,7 @@ namespace DotNetExamples.StreamBuffer
             {
                 _current = _current.Child;
             }
-            return (default(CircularArrayNode<T>) != _current);
+            return default(CircularArrayNode<T>) != _current;
         }
 
         /// <summary>

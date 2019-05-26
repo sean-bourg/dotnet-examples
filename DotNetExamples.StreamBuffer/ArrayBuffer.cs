@@ -9,19 +9,9 @@ namespace DotNetExamples.StreamBuffer
     /// Array buffer based version of the stream buffer - works best for smaller streams.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ArrayBuffer<T> : IStreamBuffer<T>, ICollection, IEnumerable<T>
+    public class ArrayBuffer<T> : IStreamBuffer<T>, IEnumerable<T>, ICollection
         where T : IEquatable<T>
     {
-        /// <summary>
-        /// Current stream index of the last added element.
-        /// </summary>
-        protected int CurrentIndex { get; set; } = -1;
-
-        /// <summary>
-        /// Data held by this stream.
-        /// </summary>
-        protected T[] Data { get; set; }
-
         /// <summary>
         /// Returns the fixed capacity of the CircularArray.
         /// </summary>
@@ -33,18 +23,6 @@ namespace DotNetExamples.StreamBuffer
         public int Count { get; protected set; } = 0;
 
         /// <summary>
-        /// Return sorted buffer.
-        /// </summary>
-        protected IEnumerable<T> Buffer
-        {
-            get => Data.Where((value, index) => index < Count)
-                    .Select((value, index) => new { Value = value, Order = CaculateOrder(index) })
-                    .OrderBy(record => record.Order)
-                    .Select(record => record.Value)
-                    .ToArray();
-        }
-
-        /// <summary>
         /// Gets an object that can be used to synchronize access to the instance of the <see cref="ICollection"/> class.
         /// </summary>
         public object SyncRoot { get; } = new object();
@@ -53,6 +31,28 @@ namespace DotNetExamples.StreamBuffer
         /// Gets a value indicating whether access to this instance of the <see cref="ICollection"/> is synchronized (thread safe).        
         /// </summary>
         public bool IsSynchronized { get => true; }
+
+        /// <summary>
+        /// Current stream index of the last added element.
+        /// </summary>
+        protected int CurrentIndex { get; set; } = 0;
+
+        /// <summary>
+        /// Data held by this stream.
+        /// </summary>
+        protected T[] Data { get; set; }
+
+        /// <summary>
+        /// Return sorted buffer.
+        /// </summary>
+        protected IEnumerable<T> Buffer
+        {
+            get => Data.Where((v, i) => i < Count)
+                    .Select((v, i) => new { Value = v, Order = (Data.Length - CurrentIndex + i) % Data.Length })
+                    .OrderBy(r => r.Order)
+                    .Select(r => r.Value)
+                    .ToArray();
+        }
 
         /// <summary>
         ///  Array buffer constructor.
@@ -67,11 +67,11 @@ namespace DotNetExamples.StreamBuffer
         /// <summary>
         /// Adds an object to the back of the CircularArray.
         /// </summary>
-        /// <param name="obj">The new object</param>
-        public void Add(T obj)
+        /// <param name="value">The new object</param>
+        public void Add(T value)
         {
+            Data[CurrentIndex] = value;
             CurrentIndex = (CurrentIndex + 1) % Data.Length;
-            Data[CurrentIndex] = obj;
             if (Count < Capacity)
             {
                 Count++;
@@ -85,25 +85,28 @@ namespace DotNetExamples.StreamBuffer
         /// </summary>
         /// <param name="index">The relative index of the element.</param>
         /// <returns>value</returns>
-        public T Get(int index) => (-1 < index && index < Count) ? Buffer.ToArray()[index] : default(T);
+        public T Get(int index)
+        {
+            if (-1 < index && index < Count)
+            {
+                return Buffer.ToArray()[index];
+            }
+            throw new ArgumentOutOfRangeException(String.Format("Requested index {0} exceeds array length.", index));
+        }
 
         /// <summary>
         /// Returns the relative index of the given element if it is in the
         /// CircularArray or -1 if the element is not found.
         /// </summary>
-        /// <param name="obj">The object to find in the array</param>
+        /// <param name="value">The object to find in the array</param>
         /// <returns>The index of the given element</returns>
-        public int IndexOf(T obj) => (0 == Count) ? -1 : Buffer.Select((value, index) => new { Value = value, Priority = index })
-                    .Where(record => obj.Equals(record.Value))
-                    .Select(record => record.Priority)
-                    .First();
-
-        /// <summary>
-        /// Calculate element's order in the sorted buffer.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        protected int CaculateOrder(int index) => (Data.Length - CurrentIndex + 1 + index) % Data.Length;
+        public int IndexOf(T value)
+        {
+            IEnumerable<int> list = Data.Select((v, i) => new { Value = v, Priority = i })
+                    .Where(r => value.Equals(r.Value))
+                    .Select(r => r.Priority);
+            return 0 == list.Count() ? -1 : list.First();
+        }
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
@@ -122,8 +125,6 @@ namespace DotNetExamples.StreamBuffer
         /// </summary>
         /// <param name="array">The one-dimensional <see cref="Array"/> that is the destination of the elements copied from ICollection. The Array must have zero-based indexing.</param>
         /// <param name="index">The zero-based index in array at which copying begins.</param>
-
         public void CopyTo(Array array, int index) => Buffer.ToList().CopyTo(array as T[], index);
-
     }
 }

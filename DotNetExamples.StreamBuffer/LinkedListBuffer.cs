@@ -11,14 +11,9 @@ namespace DotNetExamples.StreamBuffer
     /// order to reduce code maintenance.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class LinkedListBuffer<T> : IStreamBuffer<T>, ICollection, IEnumerable<T>
+    public class LinkedListBuffer<T> : IStreamBuffer<T>, IEnumerable<T>, ICollection
         where T : IEquatable<T>
     {
-        /// <summary>
-        /// The first element in this linked list.
-        /// </summary>
-        protected LinkedList<T> List;
-
         /// <summary>
         /// Returns the fixed capacity of the CircularArray.
         /// </summary>
@@ -40,23 +35,28 @@ namespace DotNetExamples.StreamBuffer
         public Object SyncRoot { get; } = new Object();
 
         /// <summary>
+        /// The first element in this linked list.
+        /// </summary>
+        LinkedList<T> List;
+
+        /// <summary>
         /// Construct instance of the LinkedList buffer.
         /// </summary>
         /// <param name="capacity"></param>
         public LinkedListBuffer(int capacity)
         {
-            List = new LinkedList<T>();
             Capacity = capacity;
+            List = new LinkedList<T>();
         }
 
         /// <summary>
         /// Adds an object to the back of the CircularArray.
         /// </summary>
-        /// <param name="obj">The new object</param>
-        public void Add(T obj)
+        /// <param name="value">The new object</param>
+        public void Add(T value)
         {
-            List.AddFirst(obj);
-            if (Count == Capacity)
+            List.AddFirst(value);
+            if (Count > Capacity)
             {
                 List.RemoveLast();
             }
@@ -76,21 +76,28 @@ namespace DotNetExamples.StreamBuffer
         /// </summary>
         /// <param name="index">The relative index of the element.</param>
         /// <returns>value</returns>
-        public T Get(int index) => (-1 < index && index < Count) ? List.Select(x => x).Reverse().ToArray()[index] : default(T);
+        public T Get(int index)
+        {
+            if (-1 < index && index < Count)
+            {
+                return List.Select(x => x).Reverse().ToArray()[index];
+            }
+            throw new ArgumentOutOfRangeException(String.Format("Requested index {0} exceeds array length.", index));
+        }
 
         /// <summary>
         /// Returns the relative index of the given element if it is in the
         /// CircularArray or -1 if the element is not found.
         /// </summary>
-        /// <param name="obj">The object to find in the array</param>
+        /// <param name="value">The object to find in the array</param>
         /// <returns>The index of the given element</returns>
-        public int IndexOf(T obj)
+        public int IndexOf(T value)
         {
             // Use linq query & anonymous types
-            IEnumerable<int> results = List.Select((value, index) => new { Value = value, SortOrder = Count - index - 1 })
-                .Where(record => { bool match = obj.Equals(record.Value); return match; })
-                .Select(match => match.SortOrder);
-            return (0 == results.Count()) ? -1 : results.First();
+            IEnumerable<int> results = List.Select((v, i) => new { Value = v, SortOrder = Count - i - 1 })
+                .Where(r => { bool match = value.Equals(r.Value); return match; })
+                .Select(m => m.SortOrder);
+            return 0 == results.Count() ? -1 : results.First();
         }
 
         /// <summary>

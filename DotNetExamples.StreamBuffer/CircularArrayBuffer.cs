@@ -13,16 +13,6 @@ namespace DotNetExamples.StreamBuffer
         where T : IEquatable<T>
     {
         /// <summary>
-        /// The first element in this linked list.
-        /// </summary>
-        CircularArrayNode<T> First;
-
-        /// <summary>
-        /// The last element in this linked list.
-        /// </summary>
-        CircularArrayNode<T> Last;
-
-        /// <summary>
         /// Returns the fixed capacity of the CircularArrayNode.
         /// </summary>
         public int Capacity { get; protected set; }
@@ -43,10 +33,20 @@ namespace DotNetExamples.StreamBuffer
         public Object SyncRoot { get; } = new Object();
 
         /// <summary>
+        /// The first element in this linked list.
+        /// </summary>
+        CircularArrayNode<T> First;
+
+        /// <summary>
+        /// The last element in this linked list.
+        /// </summary>
+        CircularArrayNode<T> Last;
+
+        /// <summary>
         /// Delagate function for dynamic adding of elements.
         /// </summary>
-        /// <param name="obj"></param>
-        protected delegate void DynamicAdd(T obj);
+        /// <param name="value"></param>
+        delegate void DynamicAdd(T value);
 
         /// <summary>
         /// Dynamic delagate assignment variable. Since the stream can not remove element the add function dynamically changes as the stream fills to reduce program steps once full.
@@ -66,8 +66,8 @@ namespace DotNetExamples.StreamBuffer
         /// <summary>
         /// Adds an object to the back of the CircularArrayNode.
         /// </summary>
-        /// <param name="obj">The new object</param>
-        public void Add(T obj) => addFunc(obj);
+        /// <param name="value">The new object</param>
+        public void Add(T value) => addFunc(value);
 
         /// <summary>
         /// Copies the elements of the ICollection to an Array, starting at a particular Array index.
@@ -109,18 +109,18 @@ namespace DotNetExamples.StreamBuffer
             if (-1 < index && index < Count)
             {
                 CircularArrayNode<T> node = First.Get(index);
-                return (default(CircularArrayNode<T>) == node) ? default(T) : node.Value;
+                return default(CircularArrayNode<T>) == node ? default(T) : node.Value;
             }
-            return default(T);
+            throw new ArgumentOutOfRangeException(String.Format("Requested index {0} exceeds array length.", index));
         }
 
         /// <summary>
         /// Returns the relative index of the given element if it is in the
         /// CircularArrayNode or -1 if the element is not found.
         /// </summary>
-        /// <param name="obj">The object to find in the array</param>
+        /// <param name="value">The object to find in the array</param>
         /// <returns>The index of the given element</returns>
-        public int IndexOf(T obj) => (default(CircularArrayNode<T>) == First) ? -1 : First.IndexOf(obj, Count);
+        public int IndexOf(T value) => (default(CircularArrayNode<T>) == First) ? -1 : First.IndexOf(value, Count);
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
@@ -137,11 +137,11 @@ namespace DotNetExamples.StreamBuffer
         /// <summary>
         /// Add function for an empty stack.
         /// </summary>
-        /// <param name="obj">The new object</param>
-        protected void AddEmpty(T obj)
+        /// <param name="value">The new object</param>
+        protected void AddEmpty(T value)
         {
             Count = 1;
-            Last = new CircularArrayNode<T>(obj);
+            Last = new CircularArrayNode<T>(value);
             First = Last;
             addFunc = new DynamicAdd(AddPartial);
         }
@@ -149,10 +149,10 @@ namespace DotNetExamples.StreamBuffer
         /// <summary>
         /// Add function for stack contain 1<= n < Capacity elements.
         /// </summary>
-        /// <param name="obj">The new object</param>
-        protected void AddPartial(T obj)
+        /// <param name="value">The new object</param>
+        protected void AddPartial(T value)
         {
-            Last.Child = new CircularArrayNode<T>(obj);
+            Last.Child = new CircularArrayNode<T>(value);
             Last = Last.Child;
             Count++;
 
@@ -165,10 +165,10 @@ namespace DotNetExamples.StreamBuffer
         /// <summary>
         /// Add function for a full stack.
         /// </summary>
-        /// <param name="obj">The new object</param>
-        protected void AddFull(T obj)
+        /// <param name="value">The new object</param>
+        protected void AddFull(T value)
         {
-            Last.Child = new CircularArrayNode<T>(obj);
+            Last.Child = new CircularArrayNode<T>(value);
             Last = Last.Child;
             First = First.Child;
         }

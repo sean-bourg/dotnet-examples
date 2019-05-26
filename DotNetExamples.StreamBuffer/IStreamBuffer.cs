@@ -22,16 +22,16 @@ namespace DotNetExamples.StreamBuffer
         /// <summary>
         /// Adds an object to the back of the CircularArray.
         /// </summary>
-        /// <param name="obj">The new object</param>
-        void Add(T obj);
+        /// <param name="value">The new object</param>
+        void Add(T value);
 
         /// <summary>
         /// Returns the relative index of the given element if it is in the
         /// CircularArray or -1 if the element is not found.
         /// </summary>
-        /// <param name="obj">The object to find in the array</param>
+        /// <param name="value">The object to find in the array</param>
         /// <returns>The index of the given element</returns>
-        int IndexOf(T obj);
+        int IndexOf(T value);
 
         /// <summary>
         /// Returns the element at the given relative index. If the given item is not
