@@ -22,12 +22,12 @@ namespace DotNetExamples.StreamBuffer.Program
         /// <summary>
         /// Stream buffer to use for testing.
         /// </summary>
-        public IStreamBuffer<T> Buffer;
+        IStreamBuffer<T> Buffer;
 
         /// <summary>
         /// List of generators to use to fill stream.
         /// </summary>
-        public IList<IDataGenerator<T>> GeneratorList;
+        IList<IDataGenerator<T>> GeneratorList;
 
         /// <summary>
         /// Get list of the registered generator names.
@@ -161,7 +161,7 @@ namespace DotNetExamples.StreamBuffer.Program
         /// </summary>
         /// <param name="buffer"></param>
         /// <param name="delay"></param>
-        public void Print(IStreamBuffer<T> buffer, int delay = 0)
+        void Print(IStreamBuffer<T> buffer, int delay = 0)
         {
             lock (buffer.SyncRoot)
             {

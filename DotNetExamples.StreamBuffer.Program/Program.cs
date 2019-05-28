@@ -21,7 +21,7 @@ namespace DotNetExamples.StreamBuffer.Program
             try
             {
                 // load defaults
-                Action command = BuildApp(
+                Action command = BuildCommand(
                     int.Parse(System.Configuration.ConfigurationManager.AppSettings.Get("Capacity")),
                     int.Parse(System.Configuration.ConfigurationManager.AppSettings.Get("FillCount")),
                     default(BufferType),
@@ -60,7 +60,7 @@ namespace DotNetExamples.StreamBuffer.Program
         /// <param name="testType"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        static Action BuildApp(int capacity, int fillCount, BufferType bufferType, TestType testType, string[] args)
+        static Action BuildCommand(int capacity, int fillCount, BufferType bufferType, TestType testType, string[] args)
         {
             // initialize local variables
             List<string> errorList = new List<string>();
@@ -68,54 +68,55 @@ namespace DotNetExamples.StreamBuffer.Program
             // parse args.
             for (int i = 0; i < args.Length; i += 2)
             {
+                int j = i + 1;
                 switch (args[i].ToLower(CultureInfo.InvariantCulture))
                 {
                     case "-t":
                     case "--type":
-                        if ((i + 1) > args.Length)
+                        if (j > args.Length)
                         {
                             errorList.Add("Missing type value");
                         }
-                        else if (!Enum.TryParse<TestType>(args[i + 1], out testType))
+                        else if (!Enum.TryParse<TestType>(args[j], out testType))
                         {
-                            errorList.Add(String.Format("Invalid test type specified: '{0}'.", args[i + 1]));
+                            errorList.Add(String.Format("Invalid test type specified: '{0}'.", args[j]));
                         }
                         break;
 
 
                     case "-b":
                     case "--buffer":
-                        if ((i + 1) > args.Length)
+                        if (j > args.Length)
                         {
                             errorList.Add("Missing buffer value");
                         }
-                        else if (!Enum.TryParse<BufferType>(args[i + 1], out bufferType))
+                        else if (!Enum.TryParse<BufferType>(args[j], out bufferType))
                         {
-                            errorList.Add(String.Format("Invalid buffer type specified: '{0}'.", args[i + 1]));
+                            errorList.Add(String.Format("Invalid buffer type specified: '{0}'.", args[j]));
                         }
                         break;
 
                     case "-c":
                     case "--capacity":
-                        if ((i + 1) > args.Length)
+                        if (j > args.Length)
                         {
                             errorList.Add("Missing capacity value");
                         }
-                        else if (!int.TryParse(args[i + 1], out capacity))
+                        else if (!int.TryParse(args[j], out capacity))
                         {
-                            errorList.Add(String.Format("Invalid capacity specified: '{0}'", args[i + 1]));
+                            errorList.Add(String.Format("Invalid capacity specified: '{0}'", args[j]));
                         }
                         break;
 
                     case "-f":
                     case "--fill":
-                        if ((i + 1) > args.Length)
+                        if (j > args.Length)
                         {
                             errorList.Add("Missing fill count value");
                         }
-                        else if (!int.TryParse(args[i + 1], out fillCount))
+                        else if (!int.TryParse(args[j], out fillCount))
                         {
-                            errorList.Add(String.Format("Invalid fill count specified: '{0}'", args[i + 1]));
+                            errorList.Add(String.Format("Invalid fill count specified: '{0}'", args[j]));
                         }
                         break;
 
